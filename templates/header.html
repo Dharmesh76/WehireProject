@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+  <title>{% block title %}{% endblock title %}</title>
+  <link rel="icon" href="/static/images/logo.png">
+
+
+</head>
+
+<body>
+
+  <!-- navbar start -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top" style="padding-bottom: 10px;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/static/images/logo.png" alt="..." width="30" height="30" class="d-inline-block align-text-top">
+        WeHire
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Contact</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="butqton" data-bs-toggle="dropdown" aria-expanded="false">
+              Catagory
+            </a>
+            <ul class="dropdown-menu" style="max-height: 400px; overflow-y: scroll;">
+              {% for cat in cat%}
+              <li><a class="dropdown-item" href="/catagory/{{cat.id}}">{{cat.name}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user-feedback">Feedback</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-warning" type="submit">Search</button>
+        </form>
+        {% if cudata == 'none' %}
+        <button class="btn btn-outline-warning" type="button" style="margin-right: 6px; margin-left: 8px;"
+          data-bs-toggle="modal" data-bs-target="#login">Login</button>
+        <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signup">Sign
+          Up</button>
+        {% elif cudata %}
+        <li class="nav-item dropdown" style="list-style-type:none;">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false" style="margin-left: 5px;">
+              {{cudata.email}}
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Udate Profile</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <form action="{% url 'userlogout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-sm" name="user_se" value="user_se"
+                  style="width: 180px;">Logout</button>
+              </form>
+            </ul>
+          </div>
+        </li>
+
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- navbar end -->
+  {% if cudata.is_varified is False%}
+  <div class="alert alert-warning d-flex align-items-center" style="margin-top: 63px; margin-bottom: -0.5px;" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    <div>
+      Please verify your email !
+    </div>
+  </div>
+  {% endif %}
+  <!-- Modal -->
+  <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Sign up</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3" method="post">
+            {% csrf_token %}
+            <div class="col-md-6">
+              <label for="validationDefault01" class="form-label">First name</label>
+              <input type="text" class="form-control" id="validationDefault01" name="first_name" equired>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault02" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="validationDefault02" name="last_name" required>
+            </div>
+            <div class="col-md-12">
+              <label for="validationDefaultUsername" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                <input type="text" class="form-control" id="validationDefaultUsername"
+                  aria-describedby="inputGroupPrepend2" name="email" required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="validationDefault03" class="form-label">Password</label>
+              <input type="password" class="form-control" id="validationDefault03" name="password" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault03" class="form-label">Skill</label>
+              <input type="text" class="form-control" id="validationDefault03" name="skill" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault03" class="form-label">Zip</label>
+              <input type="number" class="form-control" id="validationDefault03" name="zip" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault03" class="form-label">City</label>
+              <input type="text" class="form-control" id="validationDefault03" name="city" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault04" class="form-label">Age</label>
+              <select class="form-select" id="validationDefault04" name="age" required>
+                <option selected disabled value="">Choose...</option>
+                <option>18-25</option>
+                <option>25-30</option>
+                <option>30-35</option>
+                <option>35-40</option>
+                <option>40-45</option>
+                <option>45-50</option>
+                <option>Above 50</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault04" class="form-label">State</label>
+              <select class="form-select" id="validationDefault04" name="state" required>
+                <option selected disabled value="">Choose...</option>
+                <option>Andaman and Nicobar Islands</option>
+                <option>Andhra Pradesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chandigarh</option>
+                <option>Chhattisgarh</option>
+                <option>Dadra and Nagar Haveli</option>
+                <option>Daman and Diu</option>
+                <option>Delhi</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jammu and Kashmir</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Lakshadweep</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Orissa</option>
+                <option>Pondicherry</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Tripura</option>
+                <option>Uttaranchal</option>
+                <option>Uttar Pradesh</option>
+                <option>West Bengal</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault05" class="form-label">Mobile</label>
+              <input type="number" class="form-control" id="validationDefault05" name="mobile" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault05" class="form-label">Experience In Years</label>
+              <input type="number" class="form-control" id="validationDefault05" name="experince" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault04" class="form-label">Gender</label>
+              <select class="form-select" id="validationDefault04" name="gender" required>
+                <option selected disabled value="">Choose...</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+            <div class="col-md-12">
+              <h6>
+                {% if messages %}
+                <ul class="messages">
+                  {% for message in messages %}
+                  {% if message.tags == 'error' %}
+                  <li class="error">{{ message }}</li>
+                  {% elif message.tags == 'success' %}
+                  <li class="warning">{{ message }}</li>    
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </h6>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit" name="signup" value="signup">Signup</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Login Modal-->
+  <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3" method="post">
+            {% csrf_token %}
+            <div class="col-md-12">
+              <label for="validationDefault02" class="form-label">Email</label>
+              <input type="text" class="form-control" id="validationDefault02" name="email" required>
+            </div>
+            <div class="col-md-12">
+              <label for="validationDefault02" class="form-label">Password</label>
+              <input type="text" class="form-control" id="validationDefault02" name="password" required>
+            </div>
+            <div class="col-md-12">
+              <h6>
+                {% if messages %}
+                <ul class="messages">
+                  {% for message in messages %}
+                  {% if message.tags == 'warning' %}
+                  <li class="warning">{{ message }}</li>              
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </h6>
+            </div>
+            <div class="col-md-12">
+              <a href="/forget-password">Forget Password ?</a>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit" name="login" value="login">Login</button>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+  {% block main-contant %}
+  {% endblock %}
+</body>
+<footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  {% if messages %}
+  {% for message in messages %}
+  {% if message.tags == 'error' %}
+  <script>
+    var loginModal = new bootstrap.Modal(document.getElementById('signup'));
+    loginModal.toggle();   
+  </script>
+  {% elif message.tags == 'success' %}
+  <script>
+    var loginModal = new bootstrap.Modal(document.getElementById('signup'));
+    loginModal.toggle();   
+  </script>
+  {% elif message.tags == 'warning' %}
+  <script>
+    loginModal = new bootstrap.Modal(document.getElementById('login'));
+    loginModal.toggle();
+  </script>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  <script>
+    // Check if the warning message exists and is associated with the login form
+    //   var warningMessage = "{{ messages }}";
+    //   var loginFormExists = document.getElementById('login') !== null;
+    //   var signupFormExists = document.getElementById('signup') !== null;
+
+    //   if (warningMessage && loginFormExists) {
+    //     // Toggle the login form modal
+    //     var loginModal = new bootstrap.Modal(document.getElementById('login'));
+    //     loginModal.toggle();
+    //   }
+
+    //   var warningMessage = "{{ messages }}";
+    //   var signupFormExists = document.getElementById('signup') !== null;
+
+    //   if (warningMessage && signupFormExists) {
+    //     // Toggle the login form modal
+    //     var loginModal = new bootstrap.Modal(document.getElementById('signup'));
+    //     loginModal.toggle();
+    //   }
+    // </script>
+</footer>

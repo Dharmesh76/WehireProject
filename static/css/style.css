@@ -1,0 +1,151 @@
+.card-with-bg {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  /* Ensures content doesn't overflow the card */
+}
+
+.card-with-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+}
+
+.card-with-bg .card-body {
+  position: relative;
+  z-index: 1;
+  padding-top: 20px;
+  /* Add padding to the top of the card body */
+}
+
+.card-with-bg .card-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-with-bg .card-text {
+  font-size: 1.1rem;
+}
+
+.background-image {
+  background-image: url('/static/images/bg1.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.responsive-image {
+  max-width: 100%;
+  height: auto;
+}
+/* Apply general styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.background {
+  background-image: url('/static/images/add\ background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-attachment: fixed;
+}
+
+.form-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 15px; /* Adjust the overall border-radius */
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+#jobForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="text"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px; /* Set border-radius for all inputs */
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #007bff;
+}
+
+.form-container button {
+  padding: 15px 30px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 8px; /* Set border-radius for buttons */
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Adding some animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.fixed-bottom-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+}

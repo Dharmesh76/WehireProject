@@ -1,0 +1,160 @@
+{% include 'header.html' %}
+<div class="container" style="margin-top: 60px;">
+    <div class="card text-bg-info mb-3" style="max-width: 40rem; margin-left: 290px; margin-top: 180px;">
+        <div class="card-header">
+            <h6 style="margin-left: 220px;">Give us feedback</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="row g-3">
+                {% csrf_token %}
+                <div class="col-md-6">
+                    <label for="validationDefault01" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="validationDefault01" name="FirstName" equired>
+                </div>
+                <div class="col-md-6">
+                    <label for="validationDefault02" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="validationDefault02" name="LastName" required>
+                </div>
+                <div class="col-md-12">
+                    <label for="validationDefaultUsername" class="form-label">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                        <input type="text" class="form-control" id="validationDefaultUsername"
+                            aria-describedby="inputGroupPrepend2" name="email" placeholder="e.g. exampl@gmail.com"
+                            required>
+                    </div>
+                </div>
+                <div class="col-md-6 position-relative">
+                    <label for="validationTooltip03" class="form-label">Mobile</label>
+                    <input type="text" class="form-control" id="validationTooltip03" name="phone" placeholder="e.g. +1 982982763"
+                        required>
+                    <div class="invalid-tooltip">
+                        Please provide a valid city.
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                    <textarea class="form-control" placeholder="Give your message here" id="exampleFormControlTextarea1"
+                        rows="5" name="message"></textarea>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%"
+  data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+  <div class="text-center text-lg-start text-dark" id="about" style="background-color: #ECEFF1; margin-top: 20px;">
+  </div>
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-between p-4 text-white" style="background-color: #21D192">
+    <!-- Left -->
+    <div class="me-5">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold">Wehire</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p>
+            Here you can use rows and columns to organize your footer
+            content. Lorem ipsum dolor sit amet, consectetur adipisicing
+            elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold">Products</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p>
+            <a href="#!" class="text-dark">MDBootstrap</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">MDWordPress</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">BrandFlow</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">Bootstrap Angular</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold">Useful links</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p>
+            <a href="#!" class="text-dark">Your Account</a>
+          </p>
+          <p>
+            <a href="/hireerlogin" class="text-dark">Are You Hirer?</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold">Contact</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © 2023 Copyright:
+    <a class="text-dark" href="https://mdbootstrap.com/">Wehire.com || Develop by Dharmesh Yadav</a>
+  </div>
+  <!-- Copyright -->
+
+</div>

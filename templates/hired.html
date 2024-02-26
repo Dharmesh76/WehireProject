@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>WeHire-Manage Recuirement</title>
+    <link rel="icon" href="/static/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-success fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/static/images/logo.png" alt="..." width="30" height="30"
+                    class="d-inline-block align-text-top">
+                WeHire
+            </a>
+            <button data-mdb-collapse-init class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-success" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Welcome, {{data.business_name}}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex mt-3" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                    <hr>
+                    <form action="{% url 'userlogout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-sm" name="hire_se"
+                            value="hire_se">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <form class="row g-3" action="{% url 'hirednotice/' {{i.}} %}" method="post">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <label for="validationDefault01" class="form-label">First name</label>
+            <input type="text" class="form-control" id="validationDefault01" name="company"
+                value="{{data.business_name}}" readonly required>
+        </div>
+        <div class="col-md-6">
+            <label for="validationDefault02" class="form-label">Set interview Date</label>
+            <input type="date" class="form-control" id="validationDefault02" name="date" required>
+        </div>
+        <div class="col-md-6">
+            <label for="validationDefault02" class="form-label">Set interview Time</label>
+            <input type="time" class="form-control" id="validationDefault02" name="time" required>
+        </div>
+        <div class="col-md-12">
+            <label for="validationDefault03" class="form-label">Enter Street</label>
+            <textarea name="street" id="" cols="6" rows="3"></textarea>
+        </div>
+        <div class="col-md-">
+            <label for="validationDefault02" class="form-label">Enter City With Pin</label>
+            <input type="text" class="form-control" id="validationDefault02" name="city" required>
+        </div>
+        <div class="col-md-6">
+            <label for="validationDefault05" class="form-label">Enter Number</label>
+            <input type="number" class="form-control" id="validationDefault05" name="number" required>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+    </form>
+</body>
+</html>    

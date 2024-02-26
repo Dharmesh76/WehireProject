@@ -1,0 +1,284 @@
+<!-- Your code -->
+{% extends "header.html" %}
+{% block title %}Category{% endblock %}
+{% block main-contant %}
+<h5 style="margin-top: 70px; padding-left: 70px;">Job Availables In this catagory :{{cat_filter.name}}</h5>
+<div class="container" style="padding-top: 25px;">
+  {% for i in cat_list %}
+  {% if forloop.counter0|divisibleby:2 %} {# Open a new row for every two jobs #}
+  <div class="row">
+    {% endif %}
+    <div class="col-sm-6 mb-3 mb-sm-0">
+      <div class="card">
+        <div class="card-body">
+          <img src="{{i.logo.url}}" style="width: 78px; height: 74px;" class="img-fluid rounded-circle" alt="...">
+          <p class="card-text"><b>Job Description:</b>{{ i.job_description }}</p>
+          <p class="card-text"><b>Salary:</b>{{ i.salary }} <b style="margin-left: 50px;">Skill:</b>{{ i.recuiredskill}} <b style="margin-left: 50px;">Age:</b>{{ i.recuiredage }}</p>
+          {% if cudata != 'none' and cudata.is_varified is True %}
+          <a href="/apply-job/{{i.id}}" class="btn btn-primary">Apply</a>
+          {% elif cudata == 'none' %}
+          <a href="#signup" data-bs-toggle="modal" class="btn btn-primary">Apply</a>
+          {% elif cudata.is_varified is False %}
+          <a href="#warning" data-bs-toggle="modal" class="btn btn-primary">Apply</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+<!--  modal for apply job -->
+<!-- <div class="modal fade" id="catapply" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Apply</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-3" method="post">
+            {% csrf_token %}
+            <div class="col-md-6">
+              <label for="validationDefault01" class="form-label">First name</label>
+              <input type="text" class="form-control" id="validationDefault01" value="{{cudata.first_name}}" name="first_name" equired>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault02" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="validationDefault02" name="last_name" required>
+            </div>
+            <div class="col-md-12">
+              <label for="validationDefaultUsername" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                <input type="text" class="form-control" id="validationDefaultUsername"
+                  aria-describedby="inputGroupPrepend2" name="email" required>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="validationDefault03" class="form-label">Company</label>
+              <input type="text" class="form-control" id="validationDefault03" name="applyto" value="{{cat_list.added_by}}" readonly>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault03" class="form-label">Skill</label>
+              <input type="text" class="form-control" id="validationDefault03" name="skill" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault03" class="form-label">Zip</label>
+              <input type="number" class="form-control" id="validationDefault03" name="zip" required> 
+            </div>  
+            <div class="col-md-6">
+              <label for="validationDefault03" class="form-label">City</label>
+              <input type="text" class="form-control" id="validationDefault03" name="city" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault04" class="form-label">Age</label>
+              <select class="form-select" id="validationDefault04" name="age" required>
+                <option selected disabled value="">Choose...</option>
+                <option>18-25</option>
+                <option>25-30</option>
+                <option>30-35</option>
+                <option>35-40</option>
+                <option>40-45</option>
+                <option>45-50</option>
+                <option>Above 50</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault04" class="form-label">State</label>
+              <select class="form-select" id="validationDefault04" name="state" required>
+                <option selected disabled value="">Choose...</option>
+                <option>Andaman and Nicobar Islands</option>
+                <option>Andhra Pradesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chandigarh</option>
+                <option>Chhattisgarh</option>
+                <option>Dadra and Nagar Haveli</option>
+                <option>Daman and Diu</option>
+                <option>Delhi</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jammu and Kashmir</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Lakshadweep</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Orissa</option>
+                <option>Pondicherry</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Tripura</option>
+                <option>Uttaranchal</option>
+                <option>Uttar Pradesh</option>
+                <option>West Bengal</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault05" class="form-label">Mobile</label>
+              <input type="number" class="form-control" id="validationDefault05" name="mobile" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault05" class="form-label">Experience In Years</label>
+              <input type="number" class="form-control" id="validationDefault05" name="experince" required>
+            </div>
+            <div class="col-md-6">
+              <label for="validationDefault05" class="form-label">Gender</label>
+              <input type="text" class="form-control" id="validationDefault05" name="Gender" value="{{cudata.gender}}" required>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit" name="apply" value="apply">apply</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<!-- Warning modal -->
+<div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Please Verify Your Account</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Warning modal end -->
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%"
+  data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+  <div class="text-center text-lg-start text-dark" id="about"
+    style="background-color: #ECEFF1; margin-top: 320px;">
+  </div>
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-between p-4 text-white" style="background-color: #21D192">
+    <!-- Left -->
+    <div class="me-5">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold">Wehire</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p>
+            Here you can use rows and columns to organize your footer
+            content. Lorem ipsum dolor sit amet, consectetur adipisicing
+            elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold">Products</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p>
+            <a href="#!" class="text-dark">MDBootstrap</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">MDWordPress</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">BrandFlow</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">Bootstrap Angular</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold">Useful links</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p>
+            <a href="#!" class="text-dark">Your Account</a>
+          </p>
+          <p>
+            <a href="/hireerlogin" class="text-dark">Are You Hirer?</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold">Contact</h6>
+          <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: #7c4dff; height: 2px" />
+          <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © 2023 Copyright:
+    <a class="text-dark" href="https://mdbootstrap.com/">Wehire.com || Develop by Dharmesh Yadav</a>
+  </div>
+  <!-- Copyright -->
+
+</div>
+{% endblock %}
